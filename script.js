@@ -153,4 +153,3 @@ submitReplyBtn.addEventListener("click", () => {
   }
 });
 
-};
