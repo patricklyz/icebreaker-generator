@@ -1,129 +1,90 @@
-// Firebase Configuration
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
-};
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
+// List of icebreaker questions
+const icebreakerQuestions = [
+  "If you could have dinner with any historical figure, who would it be and why?",
+  "What’s the most interesting place you’ve ever visited?",
+  "If you could instantly master any skill, what would it be?",
+  "What’s your favorite way to spend a weekend?",
+  "If you were stranded on a deserted island, what three things would you bring?",
+  "What’s the best book you’ve read recently?",
+  "If you could live in any fictional world, where would you choose?",
+  "What’s something you’re really good at that most people don’t know about?",
+  "If you could time travel, would you go to the past or the future?",
+  "What’s your go-to karaoke song?",
+  "What’s the most memorable meal you’ve ever had?",
+  "If you could switch lives with someone for a day, who would it be?",
+  "What’s the most spontaneous thing you’ve ever done?",
+  "If you could only eat one food for the rest of your life, what would it be?",
+  "What’s your favorite way to unwind after a long day?"
+];
 
 // DOM Elements
-const authSection = document.getElementById("auth-section");
-const appSection = document.getElementById("app-section");
-const profileSection = document.getElementById("profile-section");
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
-const loginBtn = document.getElementById("login-btn");
-const logoutBtn = document.getElementById("logout-btn");
-const authMessage = document.getElementById("auth-message");
-const profileEmail = document.getElementById("profile-email");
-const favoriteQuestions = document.getElementById("favorite-questions");
-const badgesSection = document.getElementById("badges-section"); // Section to display badges
-const backToAppBtn = document.getElementById("back-to-app-btn");
+const generateBtn = document.getElementById("generate-btn");
+const questionText = document.getElementById("question-text");
+const replyInput = document.getElementById("reply-input");
+const submitReplyBtn = document.getElementById("submit-reply");
+const responseText = document.getElementById("response-text");
 
-// Show App Section When Logged In
-function showAppSection() {
-  authSection.classList.add("hidden");
-  appSection.classList.remove("hidden");
-  profileSection.classList.add("hidden");
+// Function to generate a random icebreaker question
+function generateIcebreaker() {
+  const randomIndex = Math.floor(Math.random() * icebreakerQuestions.length);
+  return icebreakerQuestions[randomIndex];
 }
 
-// Show Profile Section
-function showProfileSection() {
-  authSection.classList.add("hidden");
-  appSection.classList.add("hidden");
-  profileSection.classList.remove("hidden");
+// Function to generate a response based on user input
+function generateResponse(userReply) {
+  const sarcasticResponses = [
+    "Wow, groundbreaking answer. Truly inspiring.",
+    "Oh, because that’s exactly what I was hoping for.",
+    "Cool story, bro. Tell it again.",
+    "Wow, you really put a lot of thought into that, huh?"
+  ];
+
+  const complimentResponses = [
+    "That’s a fantastic answer! You’re really thoughtful.",
+    "I love that! You’re so creative.",
+    "Great response! You’re full of great ideas.",
+    "Amazing! You’re really good at this."
+  ];
+
+  const neutralResponses = [
+    "Hmm, interesting. Tell me more.",
+    "Okay, I see where you’re coming from.",
+    "Fair enough. Let’s move on.",
+    "Got it. Let’s try another question."
+  ];
+
+  // Convert user reply to lowercase for easier checking
+  userReply = userReply.toLowerCase();
+
+  // Check for sarcastic triggers
+  if (userReply.includes("sarcasm") || userReply.includes("obviously")) {
+    return sarcasticResponses[Math.floor(Math.random() * sarcasticResponses.length)];
+  }
+
+  // Check for short or non-committal answers
+  if (userReply === "no" || userReply === "idk" || userReply === "i don't know") {
+    return neutralResponses[Math.floor(Math.random() * neutralResponses.length)];
+  }
+
+  // Default to a compliment
+  return complimentResponses[Math.floor(Math.random() * complimentResponses.length)];
 }
 
-// Assign Achievements and Badges
-function assignBadge(user) {
-  const userRef = db.collection("users").doc(user.uid);
-
-  // Add a badge after the user logs in for the first time
-  userRef.get().then((doc) => {
-    if (doc.exists) {
-      const userData = doc.data();
-      const badges = userData.badges || [];
-
-      // Example: Assign "First Login" badge if it's the first login
-      if (!badges.includes("First Login")) {
-        badges.push("First Login");
-        userRef.update({ badges });
-        console.log("Badge 'First Login' unlocked!");
-      }
-
-      // Example: Check if the user has generated 5 questions and unlock another badge
-      if (userData.generatedQuestions && userData.generatedQuestions >= 5) {
-        if (!badges.includes("Question Master")) {
-          badges.push("Question Master");
-          userRef.update({ badges });
-          console.log("Badge 'Question Master' unlocked!");
-        }
-      }
-      
-      // Show badges in the profile
-      badgesSection.innerHTML = "<h2>Achievements & Badges</h2>";
-      badges.forEach(badge => {
-        badgesSection.innerHTML += `<p>${badge}</p>`;
-      });
-    }
-  });
-}
-
-// Login
-loginBtn.addEventListener("click", () => {
-  const email = emailInput.value;
-  const password = passwordInput.value;
-
-  // Log in user with email and password
-  auth.signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      authMessage.textContent = "Login successful!";
-      showAppSection();
-
-      // Assign and show achievements/badges
-      assignBadge(user);
-    })
-    .catch((error) => {
-      authMessage.textContent = error.message;
-    });
+// Event Listener for Generate Button
+generateBtn.addEventListener("click", () => {
+  const question = generateIcebreaker();
+  questionText.textContent = question;
+  responseText.textContent = ""; // Clear previous response
+  replyInput.value = ""; // Clear input field
 });
 
-// Logout
-logoutBtn.addEventListener("click", () => {
-  auth.signOut().then(() => {
-    authSection.classList.remove("hidden");
-    appSection.classList.add("hidden");
-    profileSection.classList.add("hidden");
-  });
-});
-
-// Check Auth State
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    showAppSection();
-    profileEmail.textContent = user.email;
-
-    // Load favorite questions from Firestore
-    db.collection("users").doc(user.uid).get()
-      .then((doc) => {
-        if (doc.exists) {
-          favoriteQuestions.textContent = doc.data().favorites.join(", ");
-        }
-      });
-
-    // Load and assign badges
-    assignBadge(user);
+// Event Listener for Submit Reply Button
+submitReplyBtn.addEventListener("click", () => {
+  const userReply = replyInput.value.trim();
+  if (userReply) {
+    const response = generateResponse(userReply);
+    responseText.textContent = response;
   } else {
-    authSection.classList.remove("hidden");
-    appSection.classList.add("hidden");
-    profileSection.classList.add("hidden");
+    responseText.textContent = "Please type a reply!";
   }
 });
