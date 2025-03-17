@@ -1,4 +1,4 @@
-.hidden {
+.hidden { 
   display: none;
 }
 
@@ -31,8 +31,11 @@ input {
     border-radius: 5px;
 }
 
-p#compliment {
-    margin-top: 10px;
-    font-weight: bold;
-    color: green;
+#badges-section {
+  margin-top: 20px;
+}
+
+#badges-section p {
+  font-weight: bold;
+  color: #4CAF50; /* Green color for badges */
 }
