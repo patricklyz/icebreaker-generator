@@ -19,12 +19,12 @@ const appSection = document.getElementById("app-section");
 const profileSection = document.getElementById("profile-section");
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
-const signupBtn = document.getElementById("signup-btn");
 const loginBtn = document.getElementById("login-btn");
 const logoutBtn = document.getElementById("logout-btn");
 const authMessage = document.getElementById("auth-message");
 const profileEmail = document.getElementById("profile-email");
 const favoriteQuestions = document.getElementById("favorite-questions");
+const badgesSection = document.getElementById("badges-section"); // Section to display badges
 const backToAppBtn = document.getElementById("back-to-app-btn");
 
 // Show App Section When Logged In
@@ -41,23 +41,40 @@ function showProfileSection() {
   profileSection.classList.remove("hidden");
 }
 
-// Sign Up
-signupBtn.addEventListener("click", () => {
-  const email = emailInput.value;
-  const password = passwordInput.value;
+// Assign Achievements and Badges
+function assignBadge(user) {
+  const userRef = db.collection("users").doc(user.uid);
 
-  // Sign up user with email and password
-  auth.createUserWithEmailAndPassword(email, password)
-    .then(() => {
-      authMessage.textContent = "Sign up successful!";
-      console.log("Sign up successful!");
-      showAppSection();
-    })
-    .catch((error) => {
-      authMessage.textContent = error.message;
-      console.error("Sign up error: ", error.message);
-    });
-});
+  // Add a badge after the user logs in for the first time
+  userRef.get().then((doc) => {
+    if (doc.exists) {
+      const userData = doc.data();
+      const badges = userData.badges || [];
+
+      // Example: Assign "First Login" badge if it's the first login
+      if (!badges.includes("First Login")) {
+        badges.push("First Login");
+        userRef.update({ badges });
+        console.log("Badge 'First Login' unlocked!");
+      }
+
+      // Example: Check if the user has generated 5 questions and unlock another badge
+      if (userData.generatedQuestions && userData.generatedQuestions >= 5) {
+        if (!badges.includes("Question Master")) {
+          badges.push("Question Master");
+          userRef.update({ badges });
+          console.log("Badge 'Question Master' unlocked!");
+        }
+      }
+      
+      // Show badges in the profile
+      badgesSection.innerHTML = "<h2>Achievements & Badges</h2>";
+      badges.forEach(badge => {
+        badgesSection.innerHTML += `<p>${badge}</p>`;
+      });
+    }
+  });
+}
 
 // Login
 loginBtn.addEventListener("click", () => {
@@ -66,88 +83,13 @@ loginBtn.addEventListener("click", () => {
 
   // Log in user with email and password
   auth.signInWithEmailAndPassword(email, password)
-    .then(() => {
-      authMessage.textContent = "Login successful!";
-      console.log("Login successful!");
-      showAppSection();
-    })
-    .catch((error) => {
-      authMessage.textContent = error.message;
-      console.error("Login error: ", error.message);
-    });
-});
-
-// Logout
-logoutBtn.addEventListener("click", () => {
-  auth.signOut().then(() => {
-    authSection.classList.remove("hidden");
-    appSection.classList.add("hidden");
-    profileSection.classList.add("hidden");
-    console.log("User logged out.");
-  });
-});
-
-// Load Profile Data
-backToAppBtn.addEventListener("click", showAppSection);
-
-// Check Auth State
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    showAppSection();
-    profileEmail.textContent = user.email;
-    console.log("User logged in: ", user.email);
-
-    // Load favorite questions from Firestore
-    db.collection("users").doc(user.uid).get()
-      .then((doc) => {
-        if (doc.exists) {
-          favoriteQuestions.textContent = doc.data().favorites.join(", ");
-        }
-      })
-      .catch((error) => {
-        console.error("Error loading user data: ", error.message);
-      });
-  } else {
-    authSection.classList.remove("hidden");
-    appSection.classList.add("hidden");
-    profileSection.classList.add("hidden");
-    console.log("No user logged in.");
-  }
-});
-
-  appSection.classList.remove("hidden");
-  profileSection.classList.add("hidden");
-}
-
-// Show Profile Section
-function showProfileSection() {
-  authSection.classList.add("hidden");
-  appSection.classList.add("hidden");
-  profileSection.classList.remove("hidden");
-}
-
-// Sign Up
-signupBtn.addEventListener("click", () => {
-  const email = emailInput.value;
-  const password = passwordInput.value;
-  auth.createUserWithEmailAndPassword(email, password)
-    .then(() => {
-      authMessage.textContent = "Sign up successful!";
-      showAppSection();
-    })
-    .catch((error) => {
-      authMessage.textContent = error.message;
-    });
-});
-
-// Login
-loginBtn.addEventListener("click", () => {
-  const email = emailInput.value;
-  const password = passwordInput.value;
-  auth.signInWithEmailAndPassword(email, password)
-    .then(() => {
+    .then((userCredential) => {
+      const user = userCredential.user;
       authMessage.textContent = "Login successful!";
       showAppSection();
+
+      // Assign and show achievements/badges
+      assignBadge(user);
     })
     .catch((error) => {
       authMessage.textContent = error.message;
@@ -163,14 +105,12 @@ logoutBtn.addEventListener("click", () => {
   });
 });
 
-// Load Profile Data
-backToAppBtn.addEventListener("click", showAppSection);
-
 // Check Auth State
 auth.onAuthStateChanged((user) => {
   if (user) {
     showAppSection();
     profileEmail.textContent = user.email;
+
     // Load favorite questions from Firestore
     db.collection("users").doc(user.uid).get()
       .then((doc) => {
@@ -178,6 +118,9 @@ auth.onAuthStateChanged((user) => {
           favoriteQuestions.textContent = doc.data().favorites.join(", ");
         }
       });
+
+    // Load and assign badges
+    assignBadge(user);
   } else {
     authSection.classList.remove("hidden");
     appSection.classList.add("hidden");
