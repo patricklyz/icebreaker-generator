@@ -1,41 +1,77 @@
-.hidden { 
-  display: none;
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-#auth-section, #app-section, #profile-section {
+/* Container Styles */
+.container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
-  margin-top: 20px;
+  max-width: 400px;
+  width: 100%;
 }
 
-input {
-  display: block;
-  margin: 10px auto;
-  padding: 10px;
-  width: 80%;
-  max-width: 300px;
+h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
 }
 
+p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+/* Button Styles */
 button {
-  margin: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background: #0056b3;
+  background-color: #0056b3;
 }
 
-input {
-    padding: 10px;
-    width: 90%;
-    margin-top: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+/* Question Container Styles */
+#question-container {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #007bff;
 }
 
-#badges-section {
+/* Reply Section Styles */
+#reply-section {
   margin-top: 20px;
 }
 
-#badges-section p {
-  font-weight: bold;
-  color: #4CAF50; /* Green color for badges */
+#reply-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+#response-text {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #333;
 }
