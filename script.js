@@ -48,5 +48,23 @@ function submitResponse() {
             : compliments[Math.floor(Math.random() * compliments.length)];
         
         document.getElementById("compliment").innerText = complimentText;
-    }
+.hidden {
+  display: none;
+}
+
+#auth-section, #app-section, #profile-section {
+  text-align: center;
+  margin-top: 20px;
+}
+
+input {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 80%;
+  max-width: 300px;
+}
+
+button {
+  margin: 10px;
 }
