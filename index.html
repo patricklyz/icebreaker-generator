@@ -10,32 +10,34 @@
   <div class="container">
     <h1>Random Icebreaker Question Generator</h1>
     <p>Click the button below to get a random icebreaker question!</p>
-    <button id="generate-btn">Generate Question</button>
-    
-    <!-- Daily Challenge Section -->
-    <div id="daily-challenge-section">
-      <h2>Daily Challenge</h2>
-      <p id="daily-challenge-text"></p>
-    </div>
 
-    <!-- Question Section -->
+    <!-- Button to generate new question -->
+    <button id="generate-btn">Generate Question</button>
+
+    <!-- Question display -->
     <div id="question-container">
       <p id="question-text"></p>
     </div>
-    
+
+    <!-- Timer display -->
+    <div id="timer-section">
+      <p id="question-timer">30:00</p>
+      <div id="timer-bar"></div>
+    </div>
+
+    <!-- Reply section -->
     <div id="reply-section">
       <input type="text" id="reply-input" placeholder="Type your reply here...">
       <button id="submit-reply">Submit</button>
       <p id="response-text"></p>
     </div>
-    
-    <!-- Question Timer Section -->
-    <div id="timer-section">
-      <h3>Time Remaining</h3>
-      <p id="question-timer">00:30</p>
+
+    <!-- Daily Challenge Section (Optional) -->
+    <div id="daily-challenge">
+      <p id="daily-challenge-text"></p>
     </div>
   </div>
-  
+
   <script src="script.js"></script>
 </body>
 </html>
