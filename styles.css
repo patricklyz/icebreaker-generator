@@ -1,77 +1,23 @@
-/* General Styles */
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  color: #333;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-/* Container Styles */
-.container {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  max-width: 400px;
-  width: 100%;
-}
-
-h1 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-p {
-  font-size: 16px;
-  margin-bottom: 20px;
-}
-
-/* Button Styles */
-button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
+/* Daily Challenge Section */
+#daily-challenge-section {
+  margin-top: 30px;
+  padding: 15px;
+  background-color: #f1f1f1;
   border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-button:hover {
-  background-color: #0056b3;
-}
-
-/* Question Container Styles */
-#question-container {
-  margin-top: 20px;
+#daily-challenge-text {
   font-size: 18px;
-  font-weight: bold;
-  color: #007bff;
+  color: #333;
 }
 
-/* Reply Section Styles */
-#reply-section {
+/* Timer Section */
+#timer-section {
   margin-top: 20px;
 }
 
-#reply-input {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
-#response-text {
-  margin-top: 10px;
-  font-size: 16px;
-  color: #333;
+#question-timer {
+  font-size: 24px;
+  color: #e74c3c;
+  font-weight: bold;
 }
