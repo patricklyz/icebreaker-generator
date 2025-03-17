@@ -1,4 +1,14 @@
-// Firebase Configuration
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Icebreaker Question Generator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+
+my javascript:// Firebase Configuration
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
   authDomain: "YOUR_AUTH_DOMAIN",
@@ -9,7 +19,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+const app = firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
@@ -45,17 +55,13 @@ function showProfileSection() {
 signupBtn.addEventListener("click", () => {
   const email = emailInput.value;
   const password = passwordInput.value;
-
-  // Sign up user with email and password
   auth.createUserWithEmailAndPassword(email, password)
     .then(() => {
       authMessage.textContent = "Sign up successful!";
-      console.log("Sign up successful!");
       showAppSection();
     })
     .catch((error) => {
       authMessage.textContent = error.message;
-      console.error("Sign up error: ", error.message);
     });
 });
 
@@ -63,17 +69,13 @@ signupBtn.addEventListener("click", () => {
 loginBtn.addEventListener("click", () => {
   const email = emailInput.value;
   const password = passwordInput.value;
-
-  // Log in user with email and password
   auth.signInWithEmailAndPassword(email, password)
     .then(() => {
       authMessage.textContent = "Login successful!";
-      console.log("Login successful!");
       showAppSection();
     })
     .catch((error) => {
       authMessage.textContent = error.message;
-      console.error("Login error: ", error.message);
     });
 });
 
@@ -83,7 +85,6 @@ logoutBtn.addEventListener("click", () => {
     authSection.classList.remove("hidden");
     appSection.classList.add("hidden");
     profileSection.classList.add("hidden");
-    console.log("User logged out.");
   });
 });
 
@@ -95,22 +96,16 @@ auth.onAuthStateChanged((user) => {
   if (user) {
     showAppSection();
     profileEmail.textContent = user.email;
-    console.log("User logged in: ", user.email);
-
     // Load favorite questions from Firestore
     db.collection("users").doc(user.uid).get()
       .then((doc) => {
         if (doc.exists) {
           favoriteQuestions.textContent = doc.data().favorites.join(", ");
         }
-      })
-      .catch((error) => {
-        console.error("Error loading user data: ", error.message);
       });
   } else {
     authSection.classList.remove("hidden");
     appSection.classList.add("hidden");
     profileSection.classList.add("hidden");
-    console.log("No user logged in.");
   }
 });
