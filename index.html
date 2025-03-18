@@ -1,40 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Question Generator</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question Generator with Timer</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>AI Question Generator</h1>
-        <p>Answer the question below before the timer runs out!</p>
-        
-        <!-- Timer and Question Section -->
-        <div id="question-container">
-            <div id="question-timer"></div>
-            <div id="timer-container">
-                <div id="timer-bar"></div>
-            </div>
-            <p id="question-text">Click 'Generate Question' to get started.</p>
-        </div>
 
-        <!-- Input Section -->
-        <div id="reply-section">
-            <input type="text" id="reply-input" placeholder="Your answer here...">
-            <button id="submit-reply">Submit Answer</button>
-        </div>
-
-        <!-- Response Section -->
-        <div id="response-section">
-            <p id="response-text"></p>
-        </div>
-
-        <!-- Generate Question Button -->
-        <button id="generate-btn">Generate Question</button>
+  <div class="container">
+    <h1>Icebreaker Question Generator</h1>
+    <div id="question-container">
+      <p id="question-text">Click 'Generate Question' to get started.</p>
+      <div id="timer-container">
+        <div id="timer-bar"></div>
+      </div>
+      <p id="question-timer">Timer: 10s</p>
+    </div>
+    
+    <div id="reply-section">
+      <input type="text" id="reply-input" placeholder="Type your answer here..." />
+      <button id="submit-reply">Submit Answer</button>
     </div>
 
-    <script src="script.js"></script>
+    <div id="response-section">
+      <p id="response-text"></p>
+    </div>
+
+    <button id="generate-btn">Generate Question</button>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
+
