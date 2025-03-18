@@ -11,7 +11,7 @@
   <nav>
     <ul>
       <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li> <!-- Link to the About Page -->
+      <li><a href="about.html">About</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </nav>
@@ -21,14 +21,23 @@
     <h1>Welcome to the Icebreaker Generator!</h1>
     <p>Click the button below to generate a random icebreaker question and get started!</p>
     <button id="generate-btn">Generate Question</button>
+    
     <div id="question-container">
       <p id="question-text">Click "Generate Question" to get started!</p>
     </div>
+    
     <div id="reply-section">
       <input type="text" id="reply-input" placeholder="Your answer here...">
       <button id="submit-reply">Submit Answer</button>
     </div>
+    
     <div id="response-text"></div>
+    
+    <!-- Points and Badges Section -->
+    <div id="points-display">Points: 0</div>
+    <div id="badge-display">
+      <!-- Badges will appear here -->
+    </div>
 
     <!-- Timer Section -->
     <div id="timer-container">
