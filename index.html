@@ -3,34 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Question Generator with Timer</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Random Icebreaker with Timer and Badges</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
   <div class="container">
     <h1>Icebreaker Question Generator</h1>
-    <div id="question-container">
-      <p id="question-text">Click 'Generate Question' to get started.</p>
-      <div id="timer-container">
-        <div id="timer-bar"></div>
-      </div>
-      <p id="question-timer">Timer: 10s</p>
-    </div>
-    
-    <div id="reply-section">
-      <input type="text" id="reply-input" placeholder="Type your answer here..." />
-      <button id="submit-reply">Submit Answer</button>
-    </div>
+    <p>Answer the question and earn points! Click "Generate Question" to start.</p>
 
-    <div id="response-section">
-      <p id="response-text"></p>
-    </div>
-
+    <!-- Question and Timer -->
     <button id="generate-btn">Generate Question</button>
+    <div id="question-container">
+      <p id="question-text">Your question will appear here.</p>
+    </div>
+    <div id="timer-container">
+      <p id="question-timer">Time Left: 10s</p>
+      <div id="timer-bar"></div>
+    </div>
+
+    <!-- Reply Section -->
+    <input type="text" id="reply-input" placeholder="Type your answer here...">
+    <button id="submit-reply">Submit Answer</button>
+    <p id="response-text"></p>
+
+    <!-- Score and Badges -->
+    <p id="score-display">Score: 0 points</p>
+    <div id="badge-section">
+      <button id="badge-btn">Click to View Badges</button>
+      <div id="badges">Badges Earned: 0</div>
+    </div>
   </div>
 
   <script src="script.js"></script>
 </body>
 </html>
-
