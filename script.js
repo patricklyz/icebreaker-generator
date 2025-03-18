@@ -1,23 +1,4 @@
-// List of icebreaker questions
-const icebreakerQuestions = [
-  "If you could have dinner with any historical figure, who would it be and why?",
-  "What’s the most interesting place you’ve ever visited?",
-  "If you could instantly master any skill, what would it be?",
-  "What’s your favorite way to spend a weekend?",
-  "If you were stranded on a deserted island, what three things would you bring?",
-  "What’s the best book you’ve read recently?",
-  "If you could live in any fictional world, where would you choose?",
-  "What’s something you’re really good at that most people don’t know about?",
-  "If you could time travel, would you go to the past or the future?",
-  "What’s your go-to karaoke song?",
-  "What’s the most memorable meal you’ve ever had?",
-  "If you could switch lives with someone for a day, who would it be?",
-  "What’s the most spontaneous thing you’ve ever done?",
-  "If you could only eat one food for the rest of your life, what would it be?",
-  "What’s your favorite way to unwind after a long day?"
-];
-
-// DOM Elements
+// Get elements
 const generateBtn = document.getElementById("generate-btn");
 const questionText = document.getElementById("question-text");
 const questionTimer = document.getElementById("question-timer");
@@ -25,20 +6,40 @@ const timerBar = document.getElementById("timer-bar");
 const replyInput = document.getElementById("reply-input");
 const submitReplyBtn = document.getElementById("submit-reply");
 const responseText = document.getElementById("response-text");
+const scoreDisplay = document.getElementById("score-display");
+const badgeSection = document.getElementById("badge-section");
+const badges = document.getElementById("badges");
 
+// Score and Badges variables
+let score = 0;
+let badgesEarned = [];
+let timeLeft = 30; // Updated to 30 seconds
 let timer;
-let timeLeft = 10; // Time limit for answering (in seconds)
 
-// Function to Generate a Random Question
+// List of questions
+const icebreakerQuestions = [
+  "What’s your favorite hobby?",
+  "If you could travel anywhere, where would you go?",
+  "If you could meet any famous person, who would it be?",
+  "What’s your favorite food?",
+  "If you could live in any era of history, when would it be?",
+  "What’s one thing you couldn’t live without?",
+  "What’s the best piece of advice you’ve ever received?",
+  "What’s something you’ve always wanted to learn?",
+  "If you could have dinner with any historical figure, who would it be?",
+  "What’s your favorite book or movie?"
+];
+
+// Function to generate random question
 function generateIcebreaker() {
   const randomIndex = Math.floor(Math.random() * icebreakerQuestions.length);
   return icebreakerQuestions[randomIndex];
 }
 
-// Function to Start the Timer
+// Function to start the timer
 function startTimer() {
   clearInterval(timer);
-  timeLeft = 10; // Reset timer
+  timeLeft = 30; // Reset timer to 30 seconds
   updateTimerDisplay();
   updateTimerBar();
   timer = setInterval(() => {
@@ -47,79 +48,76 @@ function startTimer() {
     updateTimerBar();
     if (timeLeft <= 0) {
       clearInterval(timer);
-      responseText.textContent = "You ran out of time! Click 'Generate Question' to try again.";
+      responseText.textContent = "You ran out of time! Please generate a new question.";
     }
   }, 1000);
 }
 
-// Function to Update Timer Display
+// Function to update timer display
 function updateTimerDisplay() {
-  questionTimer.textContent = `Timer: ${timeLeft}s`;
+  questionTimer.textContent = `Time Left: ${timeLeft}s`;
 }
 
-// Function to Update Timer Bar with Crazy Colors
+// Function to update timer bar
 function updateTimerBar() {
-  const crazyColors = [
-    "#FF5733", "#33FF57", "#3357FF", "#FF33F6", "#F6FF33", 
-    "#FF6633", "#33F6FF", "#F633FF", "#FF3333", "#33FF99"
-  ];
-  
-  const randomColor = crazyColors[Math.floor(Math.random() * crazyColors.length)];
-  timerBar.style.backgroundColor = randomColor;
-  timerBar.style.width = (timeLeft / 10) * 100 + "%";
+  const width = (timeLeft / 30) * 100;
+  timerBar.style.width = `${width}%`;
+  // Add crazy color changes
+  timerBar.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
 }
 
-// Function to Check If Answer is Nonsense (Not a Real Word)
-function isValidAnswer(userReply) {
-  // Check for gibberish: Allow letters and spaces only
-  const validPattern = /^[A-Za-z\s]+$/;
-  return validPattern.test(userReply);
+// Function to check if the response is gibberish
+function isGibberish(response) {
+  // Check if the response contains only random letters and numbers
+  const validWords = /^[a-zA-Z\s]+$/;
+  return !validWords.test(response);
 }
 
-// Function to Check If Answer is a Known Short Answer (e.g., "idk", "nothing")
-function isShortAnswer(userReply) {
-  const shortAnswers = ["idk", "nothing", "meh", "i don't know", "whatever", "no"];
-  return shortAnswers.some(answer => userReply.toLowerCase().includes(answer));
+// Function to check if the response is one of the non-answer terms (like idk)
+function isNonAnswer(response) {
+  const nonAnswers = ["idk", "don't know", "meh", "no", "nothing", "whatever", "na", "naah"];
+  return nonAnswers.includes(response.trim().toLowerCase());
 }
 
-// Function to Generate AI Response Based on User Input
-function generateResponse(userReply) {
-  const sarcasticResponses = [
-    "Wow, groundbreaking answer. Truly inspiring.",
-    "Oh, because that’s exactly what I was hoping for.",
-    "Cool story, bro. Tell it again.",
-    "Wow, you really put a lot of thought into that, huh?"
-  ];
+// Function to calculate the response points and handle answers
+function handleAnswer(userReply) {
+  const trimmedReply = userReply.trim().toLowerCase();
 
-  const complimentResponses = [
-    "That’s a fantastic answer! You’re really thoughtful.",
-    "I love that! You’re so creative.",
-    "Great response! You’re full of great ideas.",
-    "Amazing! You’re really good at this."
-  ];
-
-  const confusedResponses = [
-    "Uh... what?",
-    "I have no idea what that means.",
-    "Are you speaking in code?",
-    "Hmmm... not sure how to respond to that."
-  ];
-
-  // Check if the answer is gibberish
-  if (!isValidAnswer(userReply)) {
-    return confusedResponses[Math.floor(Math.random() * confusedResponses.length)];
+  // If the answer is gibberish or too short
+  if (isGibberish(trimmedReply) || trimmedReply.length < 3 || isNonAnswer(trimmedReply)) {
+    score += 10;
+    responseText.textContent = "Your answer seems unclear or like a non-answer. 10 points for trying!";
+    return false;
   }
 
-  // Check if the answer is a known short response like "idk"
-  if (isShortAnswer(userReply)) {
-    return "Hmm... not the most exciting answer, but okay.";
-  }
-
-  // Otherwise, return a compliment
-  return complimentResponses[Math.floor(Math.random() * complimentResponses.length)];
+  // If answer is valid
+  score += 50;
+  responseText.textContent = "Great answer! You've earned 50 points!";
+  return true;
 }
 
-// Event Listener for Generating a New Question
+// Function to update score and badges
+function updateScore() {
+  scoreDisplay.textContent = `Score: ${score} points`;
+
+  // Award badges every 100 points up to 10,000 points
+  for (let i = 100; i <= score && i <= 10000; i += 100) {
+    if (!badgesEarned.includes(`Badge ${i} points`)) {
+      badgesEarned.push(`Badge ${i} points`);
+      displayBadge(`Badge ${i} points`);
+    }
+  }
+}
+
+// Function to display the badge on the page
+function displayBadge(badgeName) {
+  const badge = document.createElement("div");
+  badge.classList.add("badge");
+  badge.textContent = badgeName;
+  badges.appendChild(badge);
+}
+
+// Function to handle new question and timer restart
 generateBtn.addEventListener("click", () => {
   const question = generateIcebreaker();
   questionText.textContent = question;
@@ -128,16 +126,21 @@ generateBtn.addEventListener("click", () => {
   startTimer(); // Restart the timer
 });
 
-// Event Listener for Submitting an Answer
+// Function to handle submit answer and stop timer
 submitReplyBtn.addEventListener("click", () => {
   const userReply = replyInput.value.trim();
   if (userReply) {
-    clearInterval(timer); // Stop timer
-    responseText.textContent = generateResponse(userReply); // Generate response
-    setTimeout(() => {
-      responseText.textContent = "Great! Click 'Generate Question' for another one!";
-    }, 3000); // Prompt for new question
+    // Stop the timer when answer is submitted
+    clearInterval(timer);
+    handleAnswer(userReply);
+    updateScore(); // Update score after submitting answer
   } else {
-    responseText.textContent = "Please type a reply!";
+    responseText.textContent = "Please provide an answer!";
   }
 });
+
+// Function to show rewards and badges
+badgeSection.addEventListener("click", () => {
+  alert("Here are your badges! You can claim a new badge when you reach certain points."); 
+});
+
