@@ -7,50 +7,32 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Navigation Bar -->
-  <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-  </nav>
-
-  <!-- Main Content -->
   <div class="container">
-    <h1>Welcome to the Icebreaker Generator!</h1>
-    <p>Click the button below to generate a random icebreaker question and get started!</p>
-    <button id="generate-btn">Generate Question</button>
-    
-    <div id="question-container">
-      <p id="question-text">Click "Generate Question" to get started!</p>
+    <h1>Icebreaker Generator</h1>
+
+    <div class="question-section">
+      <div id="question-text">Click "Generate Question" to start.</div>
+      <div id="timer-display">Time: 30s</div>
+      <div id="timer-container">
+        <div id="timer-bar"></div>
+      </div>
     </div>
-    
-    <div id="reply-section">
-      <input type="text" id="reply-input" placeholder="Your answer here...">
+
+    <button id="generate-btn">Generate Question</button>
+
+    <div class="reply-section">
+      <input type="text" id="reply-input" placeholder="Type your answer here...">
       <button id="submit-reply">Submit Answer</button>
     </div>
-    
-    <div id="response-text"></div>
-    
-    <!-- Points and Badges Section -->
-    <div id="points-display">Points: 0</div>
-    <div id="badge-display">
-      <!-- Badges will appear here -->
-    </div>
 
-    <!-- Timer Section -->
-    <div id="timer-container">
-      <div id="timer-bar"></div>
+    <div id="response-text"></div>
+
+    <div class="points-section">
+      <div id="points-display">Points: 0</div>
+      <div id="badge-display"></div>
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 Icebreaker Generator. All rights reserved.</p>
-  </footer>
-
-  <!-- Link to Scripts -->
   <script src="script.js"></script>
 </body>
 </html>
