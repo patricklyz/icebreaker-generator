@@ -1,5 +1,6 @@
-# icebreaker-generator website❄️🧊
-A website that allows users can click a button to get a random, thought-provoking, or fun question to start a conversation.
+# icebreaker-generator website❄️
+#the link for the website is : https://patricklyz.github.io/icebreaker-generator/    
+This is a website that allows users can click a button to get a random, thought-provoking, or fun question to start a conversation.
 Users can type their responses to the questions in a reply bar.
 
 The website analyzes the response and provides a dynamic reply:
