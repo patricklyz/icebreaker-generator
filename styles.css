@@ -18,7 +18,7 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
-  max-width: 500px;
+  max-width: 400px;
   width: 100%;
 }
 
@@ -56,26 +56,6 @@ button:hover {
   color: #007bff;
 }
 
-/* Timer Section */
-#timer-section {
-  margin-top: 20px;
-}
-
-#question-timer {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-}
-
-#timer-bar {
-  width: 0;
-  height: 10px;
-  background-color: #007bff;
-  border-radius: 5px;
-  margin-top: 10px;
-  transition: width 1s ease-in-out;
-}
-
 /* Reply Section Styles */
 #reply-section {
   margin-top: 20px;
@@ -96,10 +76,19 @@ button:hover {
   color: #333;
 }
 
-/* Daily Challenge Section */
-#daily-challenge {
-  margin-top: 20px;
-  font-size: 18px;
-  font-weight: bold;
-  color: #007bff;
+/* Timer Bar */
+#timer-container {
+  width: 100%;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  height: 10px;
 }
+
+#timer-bar {
+  height: 100%;
+  background-color: #28a745;
+  width: 100%;
+  border-radius: 5px;
+  transition: width 1s linear;
+}
+
