@@ -1,43 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Random Icebreaker Question Generator</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Question Generator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Random Icebreaker Question Generator</h1>
-    <p>Click the button below to get a random icebreaker question!</p>
+    <div class="container">
+        <h1>AI Question Generator</h1>
+        <p>Answer the question below before the timer runs out!</p>
+        
+        <!-- Timer and Question Section -->
+        <div id="question-container">
+            <div id="question-timer"></div>
+            <div id="timer-container">
+                <div id="timer-bar"></div>
+            </div>
+            <p id="question-text">Click 'Generate Question' to get started.</p>
+        </div>
 
-    <!-- Button to generate new question -->
-    <button id="generate-btn">Generate Question</button>
+        <!-- Input Section -->
+        <div id="reply-section">
+            <input type="text" id="reply-input" placeholder="Your answer here...">
+            <button id="submit-reply">Submit Answer</button>
+        </div>
 
-    <!-- Question display -->
-    <div id="question-container">
-      <p id="question-text"></p>
+        <!-- Response Section -->
+        <div id="response-section">
+            <p id="response-text"></p>
+        </div>
+
+        <!-- Generate Question Button -->
+        <button id="generate-btn">Generate Question</button>
     </div>
 
-    <!-- Timer display -->
-    <div id="timer-section">
-      <p id="question-timer">30:00</p>
-      <div id="timer-bar"></div>
-    </div>
-
-    <!-- Reply section -->
-    <div id="reply-section">
-      <input type="text" id="reply-input" placeholder="Type your reply here...">
-      <button id="submit-reply">Submit</button>
-      <p id="response-text"></p>
-    </div>
-
-    <!-- Daily Challenge Section (Optional) -->
-    <div id="daily-challenge">
-      <p id="daily-challenge-text"></p>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
