@@ -57,8 +57,15 @@ function updateTimerDisplay() {
   questionTimer.textContent = `Timer: ${timeLeft}s`;
 }
 
-// Function to Update Timer Bar
+// Function to Update Timer Bar with Crazy Colors
 function updateTimerBar() {
+  const crazyColors = [
+    "#FF5733", "#33FF57", "#3357FF", "#FF33F6", "#F6FF33", 
+    "#FF6633", "#33F6FF", "#F633FF", "#FF3333", "#33FF99"
+  ];
+  
+  const randomColor = crazyColors[Math.floor(Math.random() * crazyColors.length)];
+  timerBar.style.backgroundColor = randomColor;
   timerBar.style.width = (timeLeft / 10) * 100 + "%";
 }
 
