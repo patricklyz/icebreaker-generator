@@ -13,7 +13,7 @@ const badges = document.getElementById("badges");
 // Score and Badges variables
 let score = 0;
 let badgesEarned = [];
-let timeLeft = 30; // Updated to 30 seconds
+let timeLeft = 30; // Set initial timer to 30 seconds
 let timer;
 
 // List of questions
@@ -28,6 +28,20 @@ const icebreakerQuestions = [
   "What’s something you’ve always wanted to learn?",
   "If you could have dinner with any historical figure, who would it be?",
   "What’s your favorite book or movie?"
+];
+
+// Custom Badge Names
+const badgeNames = [
+  "Hypertyper", 
+  "Commander Answerer", 
+  "Quick Thinker", 
+  "Master Responder", 
+  "The Oracle", 
+  "Answer Machine", 
+  "Speedster", 
+  "The Sage", 
+  "Trivia King", 
+  "Problem Solver"
 ];
 
 // Function to generate random question
@@ -104,16 +118,19 @@ function updateScore() {
   for (let i = 100; i <= score && i <= 10000; i += 100) {
     if (!badgesEarned.includes(`Badge ${i} points`)) {
       badgesEarned.push(`Badge ${i} points`);
-      displayBadge(`Badge ${i} points`);
+      displayBadge(i);
     }
   }
 }
 
 // Function to display the badge on the page
-function displayBadge(badgeName) {
+function displayBadge(points) {
+  // Select a random badge name for each score milestone
+  const randomBadgeName = badgeNames[Math.floor(Math.random() * badgeNames.length)];
+
   const badge = document.createElement("div");
   badge.classList.add("badge");
-  badge.textContent = badgeName;
+  badge.textContent = `${randomBadgeName} (${points} points)`;
   badges.appendChild(badge);
 }
 
@@ -141,5 +158,10 @@ submitReplyBtn.addEventListener("click", () => {
 
 // Function to show rewards and badges
 badgeSection.addEventListener("click", () => {
-  alert("Here are your badges! You can claim a new badge when you reach certain points."); 
+  alert("Here are your badges! You can claim a new badge when you reach certain points.");
 });
+
+// On page load, set the timer to 30 seconds
+window.onload = () => {
+  questionTimer.textContent = "Time Left: 30s";
+};
