@@ -20,65 +20,62 @@ const icebreakerQuestions = [
 // DOM Elements
 const generateBtn = document.getElementById("generate-btn");
 const questionText = document.getElementById("question-text");
+const questionTimer = document.getElementById("question-timer");
+const timerBar = document.getElementById("timer-bar");
 const replyInput = document.getElementById("reply-input");
 const submitReplyBtn = document.getElementById("submit-reply");
 const responseText = document.getElementById("response-text");
-const questionTimerText = document.getElementById("question-timer");
-const timerBar = document.getElementById("timer-bar");
-const dailyChallengeText = document.getElementById("daily-challenge-text");
 
-// Function to generate a random icebreaker question
+let timer;
+let timeLeft = 10; // Time limit for answering (in seconds)
+
+// Function to Generate a Random Question
 function generateIcebreaker() {
   const randomIndex = Math.floor(Math.random() * icebreakerQuestions.length);
   return icebreakerQuestions[randomIndex];
 }
 
-// Function to get a random crazy color
-function getRandomColor() {
-  const letters = "0123456789ABCDEF";
-  let color = "#";
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
-
-// Function to start the timer with a crazy flashing progress bar and countdown text color
-function startTimer(duration) {
-  let timer = duration, minutes, seconds;
-
-  // Clear the previous timer if there's any running
-  if (window.timerInterval) {
-    clearInterval(window.timerInterval);
-  }
-
-  window.timerInterval = setInterval(function() {
-    minutes = Math.floor(timer / 60);
-    seconds = timer % 60;
-
-    // Update the timer display
-    questionTimerText.textContent = `${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
-    
-    // Set a random color for the countdown timer text
-    questionTimerText.style.color = getRandomColor();
-
-    // Update the width of the timer bar (progress)
-    const progress = (duration - timer) / duration * 100;
-    timerBar.style.width = progress + "%";
-
-    // Set a random color for the timer bar
-    timerBar.style.backgroundColor = getRandomColor();
-
-    if (--timer < 0) {
-      clearInterval(window.timerInterval);
-      questionTimerText.textContent = "You ran out of time!";
-      responseText.textContent = "You ran out of time! Please generate a new question.";
-      submitReplyBtn.disabled = true; // Disable submit button when time is up
+// Function to Start the Timer
+function startTimer() {
+  clearInterval(timer);
+  timeLeft = 10; // Reset timer
+  updateTimerDisplay();
+  updateTimerBar();
+  timer = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay();
+    updateTimerBar();
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      responseText.textContent = "You ran out of time! Click 'Generate Question' to try again.";
     }
   }, 1000);
 }
 
-// Function to generate a response based on user input
+// Function to Update Timer Display
+function updateTimerDisplay() {
+  questionTimer.textContent = `Timer: ${timeLeft}s`;
+}
+
+// Function to Update Timer Bar
+function updateTimerBar() {
+  timerBar.style.width = (timeLeft / 10) * 100 + "%";
+}
+
+// Function to Check If Answer is Nonsense (Not a Real Word)
+function isValidAnswer(userReply) {
+  // Check for gibberish: Allow letters and spaces only
+  const validPattern = /^[A-Za-z\s]+$/;
+  return validPattern.test(userReply);
+}
+
+// Function to Check If Answer is a Known Short Answer (e.g., "idk", "nothing")
+function isShortAnswer(userReply) {
+  const shortAnswers = ["idk", "nothing", "meh", "i don't know", "whatever", "no"];
+  return shortAnswers.some(answer => userReply.toLowerCase().includes(answer));
+}
+
+// Function to Generate AI Response Based on User Input
 function generateResponse(userReply) {
   const sarcasticResponses = [
     "Wow, groundbreaking answer. Truly inspiring.",
@@ -94,62 +91,46 @@ function generateResponse(userReply) {
     "Amazing! You’re really good at this."
   ];
 
-  const neutralResponses = [
-    "Hmm, interesting. Tell me more.",
-    "Okay, I see where you’re coming from.",
-    "Fair enough. Let’s move on.",
-    "Got it. Let’s try another question."
+  const confusedResponses = [
+    "Uh... what?",
+    "I have no idea what that means.",
+    "Are you speaking in code?",
+    "Hmmm... not sure how to respond to that."
   ];
 
-  // Convert user reply to lowercase for easier checking
-  userReply = userReply.toLowerCase();
-
-  // Check for sarcastic triggers
-  if (userReply.includes("sarcasm") || userReply.includes("obviously")) {
-    return sarcasticResponses[Math.floor(Math.random() * sarcasticResponses.length)];
+  // Check if the answer is gibberish
+  if (!isValidAnswer(userReply)) {
+    return confusedResponses[Math.floor(Math.random() * confusedResponses.length)];
   }
 
-  // Check for short or non-committal answers
-  if (userReply === "no" || userReply === "idk" || userReply === "i don't know") {
-    return neutralResponses[Math.floor(Math.random() * neutralResponses.length)];
+  // Check if the answer is a known short response like "idk"
+  if (isShortAnswer(userReply)) {
+    return "Hmm... not the most exciting answer, but okay.";
   }
 
-  // Default to a compliment
+  // Otherwise, return a compliment
   return complimentResponses[Math.floor(Math.random() * complimentResponses.length)];
 }
 
-// Event Listener for Generate Button
+// Event Listener for Generating a New Question
 generateBtn.addEventListener("click", () => {
-  // Enable the submit button when a new question is generated
-  submitReplyBtn.disabled = false;
-
-  // Clear previous responses
-  responseText.textContent = "";
-  questionTimerText.textContent = "30:00";
-  timerBar.style.width = "0%";
-
   const question = generateIcebreaker();
   questionText.textContent = question;
-
-  // Start 30 seconds timer
-  startTimer(30);
+  responseText.textContent = ""; // Clear previous response
+  replyInput.value = ""; // Clear input field
+  startTimer(); // Restart the timer
 });
 
-// Event Listener for Submit Reply Button
+// Event Listener for Submitting an Answer
 submitReplyBtn.addEventListener("click", () => {
   const userReply = replyInput.value.trim();
   if (userReply) {
-    const response = generateResponse(userReply);
-    responseText.textContent = response;
-    questionTimerText.textContent = "You completed the question before time ran out!";
-    clearInterval(window.timerInterval); // Stop the timer when user submits an answer
-    submitReplyBtn.disabled = true; // Disable submit button after answering
+    clearInterval(timer); // Stop timer
+    responseText.textContent = generateResponse(userReply); // Generate response
     setTimeout(() => {
-      // Prompt user to generate a new question
-      responseText.textContent += " Click the button below to generate a new question.";
-    }, 500);
+      responseText.textContent = "Great! Click 'Generate Question' for another one!";
+    }, 3000); // Prompt for new question
   } else {
     responseText.textContent = "Please type a reply!";
   }
 });
-
