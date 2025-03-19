@@ -8,6 +8,11 @@ const timerBar = document.getElementById("timer-bar");
 const pointsDisplay = document.getElementById("points");
 const badgeDisplay = document.getElementById("badge");
 
+// Review section
+const reviewInput = document.getElementById("review-input");
+const submitReviewBtn = document.getElementById("submit-review");
+const reviewResponseText = document.getElementById("review-response-text");
+
 let timer;
 let timeLeft = 30;
 let points = 0;
@@ -19,6 +24,14 @@ const icebreakerQuestions = [
     "What is your favorite food?",
     "If you could meet any celebrity, who would it be?",
     "What is your dream job?",
+];
+
+const badgeRequirements = [
+    { name: "Beginner", points: 0 },
+    { name: "Novice", points: 50 },
+    { name: "Hypertyper", points: 100 },
+    { name: "Mastermind", points: 150 },
+    { name: "Guru", points: 200 },
 ];
 
 function generateIcebreaker() {
@@ -67,10 +80,15 @@ function generateResponse(isValid) {
         responseText.textContent = "Not the answer I was looking for, but keep trying! You earned 10 points!";
     }
     pointsDisplay.textContent = points;
-    if (points >= 100) {
-        badgeDisplay.textContent = "Hypertyper";
-    } else {
-        badgeDisplay.textContent = "";
+    updateBadge();
+}
+
+function updateBadge() {
+    for (let i = badgeRequirements.length - 1; i >= 0; i--) {
+        if (points >= badgeRequirements[i].points) {
+            badgeDisplay.textContent = badgeRequirements[i].name;
+            break;
+        }
     }
 }
 
@@ -93,6 +111,17 @@ submitReplyBtn.addEventListener("click", () => {
         }, 3000);
     } else {
         responseText.textContent = "Please enter an answer!";
+    }
+});
+
+// Review section
+submitReviewBtn.addEventListener("click", () => {
+    const review = reviewInput.value.trim();
+    if (review) {
+        reviewResponseText.textContent = "You have submitted your review!";
+        reviewInput.value = ""; // Clear the input field after submission
+    } else {
+        reviewResponseText.textContent = "Please enter a review before submitting.";
     }
 });
 
