@@ -11,7 +11,14 @@ const badgeDisplay = document.getElementById("badge");
 let timer;
 let timeLeft = 30;
 let points = 0;
-let badges = [];
+
+// Define badge thresholds and names
+const badgeLevels = [
+    { threshold: 0, badge: "Novice" },
+    { threshold: 50, badge: "Intermediate" },
+    { threshold: 100, badge: "Advanced" },
+    { threshold: 200, badge: "Expert" }
+];
 
 const icebreakerQuestions = [
     "What is your favorite hobby?",
@@ -58,6 +65,18 @@ function analyzeAnswer(answer) {
     return true;
 }
 
+function updateBadgeDisplay() {
+    // Loop through badge levels to find the highest badge the user qualifies for
+    let earnedBadge = "Novice"; // Default badge
+    for (let i = badgeLevels.length - 1; i >= 0; i--) {
+        if (points >= badgeLevels[i].threshold) {
+            earnedBadge = badgeLevels[i].badge;
+            break;
+        }
+    }
+    badgeDisplay.textContent = earnedBadge;
+}
+
 function generateResponse(isValid) {
     if (isValid) {
         points += 50;
@@ -67,11 +86,9 @@ function generateResponse(isValid) {
         responseText.textContent = "Not the answer I was looking for, but keep trying! You earned 10 points!";
     }
     pointsDisplay.textContent = points;
-    if (points >= 100) {
-        badgeDisplay.textContent = "Hypertyper";
-    } else {
-        badgeDisplay.textContent = "";
-    }
+
+    // Update the badge display
+    updateBadgeDisplay();
 }
 
 generateBtn.addEventListener("click", () => {
@@ -103,27 +120,26 @@ const reviewResponseText = document.getElementById("review-response-text");
 reviewForm.addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent the default form submission behavior
 
-    // You can use Formspree's "ajax" method for a smoother user experience
     const formData = new FormData(reviewForm);
 
     fetch(reviewForm.action, {
         method: 'POST',
-        body: formData
+        body: formData,
+        headers: {
+            'Accept': 'application/json'
+        }
     })
     .then(response => {
         if (response.ok) {
-            // Show the success message
             reviewResponseText.textContent = "Thank you for submitting your review!";
             reviewResponseText.style.color = 'green';
-            reviewForm.reset(); // Optionally reset the form
+            reviewForm.reset(); // Reset the form
         } else {
-            // Handle errors if the submission fails
             reviewResponseText.textContent = "Oops, something went wrong. Please try again later.";
             reviewResponseText.style.color = 'red';
         }
     })
     .catch(error => {
-        // Handle errors if the fetch request fails
         reviewResponseText.textContent = "Oops, something went wrong. Please try again later.";
         reviewResponseText.style.color = 'red';
     });
