@@ -33,11 +33,13 @@
             <h3>Badge: <span id="badge"></span></h3>
         </div>
 
-        <!-- Review Section -->
+        <!-- Review Section (Formspree integration) -->
         <div>
             <h2>Leave a Review</h2>
-            <textarea id="review-input" placeholder="Enter your review here..." rows="4" cols="40"></textarea>
-            <button id="submit-review">Submit Review</button>
+            <form id="review-form" action="https://formspree.io/f/yourFormId" method="POST">
+                <textarea id="review-input" name="review" placeholder="Enter your review here..." rows="4" cols="40"></textarea>
+                <button type="submit" id="submit-review">Submit Review</button>
+            </form>
             <div id="review-response-text"></div>
         </div>
     </div>
