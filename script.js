@@ -9,9 +9,8 @@ const pointsDisplay = document.getElementById("points");
 const badgeDisplay = document.getElementById("badge");
 
 // Review section
-const reviewInput = document.getElementById("review-input");
-const submitReviewBtn = document.getElementById("submit-review");
-const reviewResponseText = document.getElementById("review-response-text");
+const reviewForm = document.getElementById('review-form');
+const reviewResponseText = document.getElementById('review-response-text');
 
 let timer;
 let timeLeft = 30;
@@ -114,13 +113,9 @@ submitReplyBtn.addEventListener("click", () => {
     }
 });
 
-// Review section
-submitReviewBtn.addEventListener("click", () => {
-    const review = reviewInput.value.trim();
-    if (review) {
-        reviewResponseText.textContent = "You have submitted your review!";
-        reviewInput.value = ""; // Clear the input field after submission
-    } else {
-        reviewResponseText.textContent = "Please enter a review before submitting.";
-    }
+// Review section - handling Formspree submission
+reviewForm.addEventListener("submit", (event) => {
+    event.preventDefault(); // Prevent default form submission
+    reviewResponseText.textContent = "You have submitted your review!";
 });
+
