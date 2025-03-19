@@ -18,8 +18,6 @@ const badgeLevels = [
     { threshold: 50, badge: "Intermediate" },
     { threshold: 100, badge: "Advanced" },
     { threshold: 200, badge: "Expert" }
-    { threshold: 300, badge: "Grandmaster" }
-    { threshold: 400, badge: "hypertyper" }
 ];
 
 const icebreakerQuestions = [
@@ -68,7 +66,6 @@ function analyzeAnswer(answer) {
 }
 
 function updateBadgeDisplay() {
-    // Loop through badge levels to find the highest badge the user qualifies for
     let earnedBadge = "Novice"; // Default badge
     for (let i = badgeLevels.length - 1; i >= 0; i--) {
         if (points >= badgeLevels[i].threshold) {
@@ -88,8 +85,6 @@ function generateResponse(isValid) {
         responseText.textContent = "Not the answer I was looking for, but keep trying! You earned 10 points!";
     }
     pointsDisplay.textContent = points;
-
-    // Update the badge display
     updateBadgeDisplay();
 }
 
@@ -117,10 +112,10 @@ submitReplyBtn.addEventListener("click", () => {
 
 // Formspree Review Submission
 const reviewForm = document.getElementById("review-form");
-const reviewResponseText = document.getElementById("review-input");
+const reviewResponseText = document.getElementById("review-response-text");
 
 reviewForm.addEventListener("submit", function(event) {
-    event.preventDefault(); // Prevent the default form submission behavior
+    event.preventDefault();
 
     const formData = new FormData(reviewForm);
 
@@ -132,23 +127,20 @@ reviewForm.addEventListener("submit", function(event) {
         }
     })
     .then(response => {
-        console.log("Response status:", response.status); // Log the HTTP status code
         if (response.ok) {
-            // Show the success message
             reviewResponseText.textContent = "Thank you for submitting your review!";
             reviewResponseText.style.color = 'green';
-            reviewForm.reset(); // Reset the form
+            reviewForm.reset();
         } else {
-            // Handle errors if the submission fails
             return response.json().then(errorData => {
-                console.error("Error details:", errorData); // Log the error details
+                console.error("Error details:", errorData);
                 reviewResponseText.textContent = "Oops, something went wrong. Please try again later.";
                 reviewResponseText.style.color = 'red';
             });
         }
     })
     .catch(error => {
-        console.error("Fetch error:", error); // Log the fetch error
+        console.error("Fetch error:", error);
         reviewResponseText.textContent = "Oops, something went wrong. Please try again later.";
         reviewResponseText.style.color = 'red';
     });
