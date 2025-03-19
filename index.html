@@ -7,30 +7,45 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </nav>
+
     <div class="container">
-        <h1>Icebreaker Generator</h1>
-        <p>Click the button below to generate a fun icebreaker question!</p>
+        <h1>Icebreaker Question Generator</h1>
+        <p>Click below to generate a question and answer it!</p>
+
         <button id="generate-btn">Generate Question</button>
-        <div id="question-container"></div>
         
+        <div id="question-container"></div>
+
         <div id="timer-container">
             <div id="timer-bar"></div>
-            <p id="question-timer">Timer: 30s</p>
+            <p id="timer-text">Time Left: 30s</p>
         </div>
 
         <div id="reply-section">
-            <input type="text" id="reply-input" placeholder="Type your answer here...">
-            <button id="submit-reply">Submit</button>
+            <input type="text" id="reply-input" placeholder="Type your answer...">
+            <button id="submit-reply">Submit Answer</button>
         </div>
 
         <p id="response-text"></p>
-        <p id="points-display">Points: 0</p>
-        <p id="badge-display">Badge: None</p>
 
-        <a href="about.html" class="btn">About</a>
+        <div id="points-container">
+            <p>Points: <span id="points">0</span></p>
+        </div>
+
+        <button id="view-badges">View Badges</button>
+
+        <div id="badges-container"></div>
     </div>
 
     <script src="script.js"></script>
 </body>
 </html>
+
 
