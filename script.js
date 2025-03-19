@@ -124,4 +124,3 @@ submitReviewBtn.addEventListener("click", () => {
         reviewResponseText.textContent = "Please enter a review before submitting.";
     }
 });
-
