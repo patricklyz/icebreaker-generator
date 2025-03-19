@@ -130,16 +130,23 @@ reviewForm.addEventListener("submit", function(event) {
         }
     })
     .then(response => {
+        console.log("Response status:", response.status); // Log the HTTP status code
         if (response.ok) {
+            // Show the success message
             reviewResponseText.textContent = "Thank you for submitting your review!";
             reviewResponseText.style.color = 'green';
             reviewForm.reset(); // Reset the form
         } else {
-            reviewResponseText.textContent = "Oops, something went wrong. Please try again later.";
-            reviewResponseText.style.color = 'red';
+            // Handle errors if the submission fails
+            return response.json().then(errorData => {
+                console.error("Error details:", errorData); // Log the error details
+                reviewResponseText.textContent = "Oops, something went wrong. Please try again later.";
+                reviewResponseText.style.color = 'red';
+            });
         }
     })
     .catch(error => {
+        console.error("Fetch error:", error); // Log the fetch error
         reviewResponseText.textContent = "Oops, something went wrong. Please try again later.";
         reviewResponseText.style.color = 'red';
     });
