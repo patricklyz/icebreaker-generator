@@ -8,6 +8,12 @@
 </head>
 <body>
 
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <p><a href="index.html">Home</a></p>
+        <p><a href="about.html">About</a></p>
+    </div>
+
     <!-- Main Page -->
     <div class="container" id="main-page">
         <h1>Icebreaker Question Generator</h1>
@@ -32,14 +38,11 @@
             <h2>Points: <span id="points">0</span></h2>
             <h3>Badge: <span id="badge"></span></h3>
         </div>
-        <div class="container">
-            <a href="about.html">About</a>
-        </div>
 
         <!-- Review Section (Formspree integration) -->
         <div>
             <h2>Leave a Review</h2>
-            <form id="review-form" action="https://formspree.io/f/xvgkzzpy" method="POST">
+            <form id="review-form" action="https://formspree.io/f/your-form-id" method="POST">
                 <textarea id="review-input" name="review" placeholder="Enter your review here..." rows="4" cols="40" required></textarea>
                 <button type="submit" id="submit-review">Submit Review</button>
             </form>
