@@ -33,28 +33,13 @@
             <h3>Badge: <span id="badge"></span></h3>
         </div>
 
-        <!-- Links to Review Section -->
-        <a href="#review-page" id="leave-review">Leave a Review</a>
-    </div>
-
-    <!-- Review Page -->
-    <div class="container" id="review-page" style="display: none;">
-        <h1>Leave a Review</h1>
-        <p>We'd love to hear your thoughts! Please leave your feedback below:</p>
-
-        <!-- Review Form -->
-        <form id="review-form" action="mailto:your-email@gmail.com" method="post" enctype="text/plain">
-            <label for="email">Your Email:</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email" required>
-
-            <label for="review">Your Review:</label>
-            <textarea id="review" name="review" placeholder="Enter your feedback" rows="4" required></textarea>
-
-            <button type="submit">Submit Review</button>
-        </form>
-
-        <!-- Back to Home -->
-        <a href="#main-page" id="back-to-home">Back to Home</a>
+        <!-- Review Section -->
+        <div>
+            <h2>Leave a Review</h2>
+            <textarea id="review-input" placeholder="Enter your review here..." rows="4" cols="40"></textarea>
+            <button id="submit-review">Submit Review</button>
+            <div id="review-response-text"></div>
+        </div>
     </div>
 
     <script src="script.js"></script>
