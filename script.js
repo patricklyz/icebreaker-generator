@@ -115,7 +115,7 @@ submitReplyBtn.addEventListener("click", () => {
 
 // Formspree Review Submission
 const reviewForm = document.getElementById("review-form");
-const reviewResponseText = document.getElementById("review-response-text");
+const reviewResponseText = document.getElementById("review-input");
 
 reviewForm.addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent the default form submission behavior
