@@ -18,6 +18,8 @@ const badgeLevels = [
     { threshold: 50, badge: "Intermediate" },
     { threshold: 100, badge: "Advanced" },
     { threshold: 200, badge: "Expert" }
+    { threshold: 300, badge: "Grandmaster" }
+    { threshold: 400, badge: "hypertyper" }
 ];
 
 const icebreakerQuestions = [
