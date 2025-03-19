@@ -1,55 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Icebreaker Question Generator</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-
-    <!-- Navigation Bar -->
-    <div class="navbar">
-        <p><a href="index.html">Home</a></p>
-        <p><a href="about.html">About</a></p>
-    </div>
-
-    <!-- Main Page -->
-    <div class="container" id="main-page">
-        <h1>Icebreaker Question Generator</h1>
-
-        <!-- Timer Display -->
-        <div id="timer-container">
-            <p id="question-timer">Timer: 30s</p>
-            <div id="timer-bar"></div>
-        </div>
-
-        <!-- Generate Question and Answer Section -->
-        <button id="generate-btn">Generate Question</button>
-
-        <div id="question-container"></div>
-
-        <input type="text" id="reply-input" placeholder="Type your answer here...">
-        <button id="submit-reply">Submit Answer</button>
-
-        <div id="response-text"></div>
-
-        <div>
-            <h2>Points: <span id="points">0</span></h2>
-            <h3>Badge: <span id="badge"></span></h3>
-        </div>
-
-        <!-- Review Section (Formspree integration) -->
-        <div>
-            <h2>Leave a Review</h2>
-            <form id="review-form" action="https://formspree.io/f/your-form-id" method="POST">
-                <textarea id="review-input" name="review" placeholder="Enter your review here..." rows="4" cols="40" required></textarea>
-                <button type="submit" id="submit-review">Submit Review</button>
-            </form>
-            <div id="review-response-text"></div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Icebreaker Question Generator</title>
+     <link rel="stylesheet" href="styles.css">
+ </head>
+ <body>
+ 
+     <!-- Main Page -->
+     <div class="container" id="main-page">
+         <h1>Icebreaker Question Generator</h1>
+ 
+         <!-- Timer Display -->
+         <div id="timer-container">
+             <p id="question-timer">Timer: 30s</p>
+             <div id="timer-bar"></div>
+         </div>
+ 
+         <!-- Generate Question and Answer Section -->
+         <button id="generate-btn">Generate Question</button>
+ 
+         <div id="question-container"></div>
+ 
+         <input type="text" id="reply-input" placeholder="Type your answer here...">
+         <button id="submit-reply">Submit Answer</button>
+ 
+         <div id="response-text"></div>
+ 
+         <div>
+             <h2>Points: <span id="points">0</span></h2>
+             <h3>Badge: <span id="badge"></span></h3>
+         </div>
+         <div class="container">
+             <a href="about.html">About</a>
+         </div>
+ 
+         <!-- Review Section (Formspree integration) -->
+         <div>
+             <h2>Leave a Review</h2>
+             <form id="review-form" action="https://formspree.io/f/xvgkzzpy" method="POST">
+                 <textarea id="review-input" name="review" placeholder="Enter your review here..." rows="4" cols="40" required></textarea>
+                 <button type="submit" id="submit-review">Submit Review</button>
+             </form>
+             <div id="review-response-text"></div>
+         </div>
+     </div>
+ 
+     <script src="script.js"></script>
+ </body>
+ </html>
