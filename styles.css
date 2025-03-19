@@ -1,7 +1,7 @@
 /* General Styles */
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #ff7e5f, #feb47b); /* Crazy color background */
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
     color: #333;
     margin: 0;
     padding: 0;
@@ -49,6 +49,7 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-top: 10px;
 }
 
 button:hover {
@@ -56,7 +57,7 @@ button:hover {
 }
 
 /* Input Styles */
-#reply-input {
+#reply-input, #review-input {
     width: 100%;
     padding: 10px;
     font-size: 16px;
@@ -76,22 +77,8 @@ button:hover {
 }
 
 /* Review Section Styles */
-#review-input {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-
 #submit-review {
     background-color: #28a745;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
 }
 
 #submit-review:hover {
@@ -102,16 +89,4 @@ button:hover {
     font-weight: bold;
     margin-top: 10px;
     color: green;
-}
-
-/* Links */
-a {
-    color: #007bff;
-    text-decoration: none;
-    margin-top: 10px;
-    display: inline-block;
-}
-
-a:hover {
-    text-decoration: underline;
 }
