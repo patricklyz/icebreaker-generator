@@ -3,49 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Icebreaker Generator</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Icebreaker Question Generator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-        </ul>
-    </nav>
-
-    <div class="container">
+    <!-- Main Page -->
+    <div class="container" id="main-page">
         <h1>Icebreaker Question Generator</h1>
-        <p>Click below to generate a question and answer it!</p>
 
+        <!-- Timer Display -->
+        <div id="timer-container">
+            <p id="question-timer">Timer: 30s</p>
+            <div id="timer-bar"></div>
+        </div>
+
+        <!-- Generate Question and Answer Section -->
         <button id="generate-btn">Generate Question</button>
-        
+
         <div id="question-container"></div>
 
-        <div id="timer-container">
-            <div id="timer-bar"></div>
-            <p id="timer-text">Time Left: 30s</p>
+        <input type="text" id="reply-input" placeholder="Type your answer here...">
+        <button id="submit-reply">Submit Answer</button>
+
+        <div id="response-text"></div>
+
+        <div>
+            <h2>Points: <span id="points">0</span></h2>
+            <h3>Badge: <span id="badge"></span></h3>
         </div>
 
-        <div id="reply-section">
-            <input type="text" id="reply-input" placeholder="Type your answer...">
-            <button id="submit-reply">Submit Answer</button>
-        </div>
+        <!-- Links to Review Section -->
+        <a href="#review-page" id="leave-review">Leave a Review</a>
+    </div>
 
-        <p id="response-text"></p>
+    <!-- Review Page -->
+    <div class="container" id="review-page" style="display: none;">
+        <h1>Leave a Review</h1>
+        <p>We'd love to hear your thoughts! Please leave your feedback below:</p>
 
-        <div id="points-container">
-            <p>Points: <span id="points">0</span></p>
-        </div>
+        <!-- Review Form -->
+        <form id="review-form" action="mailto:your-email@gmail.com" method="post" enctype="text/plain">
+            <label for="email">Your Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
 
-        <button id="view-badges">View Badges</button>
+            <label for="review">Your Review:</label>
+            <textarea id="review" name="review" placeholder="Enter your feedback" rows="4" required></textarea>
 
-        <div id="badges-container"></div>
+            <button type="submit">Submit Review</button>
+        </form>
+
+        <!-- Back to Home -->
+        <a href="#main-page" id="back-to-home">Back to Home</a>
     </div>
 
     <script src="script.js"></script>
 </body>
 </html>
-
 
