@@ -11,7 +11,6 @@ const badgeDisplay = document.getElementById("badge");
 let timer;
 let timeLeft = 30;
 let points = 0;
-let badges = [];
 
 const icebreakerQuestions = [
     "What is your favorite hobby?",
@@ -103,19 +102,22 @@ const reviewResponseText = document.getElementById("review-response-text");
 reviewForm.addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent the default form submission behavior
 
-    // You can use Formspree's "ajax" method for a smoother user experience
+    // Use Formspree's "ajax" method for a smoother user experience
     const formData = new FormData(reviewForm);
 
     fetch(reviewForm.action, {
         method: 'POST',
-        body: formData
+        body: formData,
+        headers: {
+            'Accept': 'application/json'
+        }
     })
     .then(response => {
         if (response.ok) {
             // Show the success message
             reviewResponseText.textContent = "Thank you for submitting your review!";
             reviewResponseText.style.color = 'green';
-            reviewForm.reset(); // Optionally reset the form
+            reviewForm.reset(); // Reset the form
         } else {
             // Handle errors if the submission fails
             reviewResponseText.textContent = "Oops, something went wrong. Please try again later.";
